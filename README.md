@@ -8,14 +8,13 @@ ___
 ### 구동 환경
 #### Jetson Nano Kit(4GB), OS Ver: Ubuntu 18.04 (jetpack)
 #### Rp2040
-#### USB Camera
 #### IDE:Thonny
-
-### 가속도
+___
+### Thonny accel
 #### 1. thonny에서 rp2040의 가속도센서를 활용하여 3초 동안의 가속도 값을 받아 평균을 구합니다.
 #### 2. 평균 값을 mqtt를 사용하여 Jetson Nano의 Node-Red로 보냅니다.
 #### 3. Node-Red dashboard에서 정지, 걷는지, 뛰는지를 text로 나타냅니다.
-
+___
 ### 참고한 github
 https://github.com/shkim1224/rp2040-mqtt-test/blob/main/rp2040_mqtt_test.py
 ___
