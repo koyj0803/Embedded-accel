@@ -1,1 +1,21 @@
-# Embedded-accel
+# 임베디드 시스템 기말고사 작품
+## 팀원 : 1601675 황준원, 1601636 송호근
+
+## 작품 설명
+### 가속도
+#### 1. thonny에서 rp2040의 가속도센서를 활용하여 3초 동안의 가속도 값을 받아 평균을 구합니다.
+#### 2. 평균 값을 mqtt를 사용하여 Jetson Nano의 Node-Red로 보냅니다.
+#### 3. Node-Red dashboard에서 정지, 걷는지, 뛰는지를 text로 나타냅니다.
+
+### 참고한 github
+https://github.com/shkim1224/rp2040-mqtt-test/blob/main/rp2040_mqtt_test.py
+___
+## 블록도
+![가속도 1](https://user-images.githubusercontent.com/65066914/174581879-80626918-39c4-4e14-9eec-4355b1cfd57a.PNG)
+___
+
+## node-red flow
+![가속도 노드레드](https://user-images.githubusercontent.com/65066914/174582831-d46b6292-9dac-4f29-b364-b0d5b69ec47c.PNG)
+
+## 결과 영상
+https://www.youtube.com/watch?v=ygLKSFusXfM
