@@ -7,7 +7,7 @@ ___
 ## 작품 설명
 ### 구동 환경
 #### Jetson Nano Kit(4GB), OS Ver: Ubuntu 18.04 (jetpack)
-###  Rp2040
+#### Rp2040
 #### USB Camera
 #### IDE:Thonny
 
