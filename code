@@ -1,0 +1,78 @@
+import network,time
+from simple import MQTTClient 
+from machine import I2C,Pin,Timer
+from lsm6dsox import LSM6DSOX
+from machine import Pin, I2C
+
+lsm = LSM6DSOX(I2C(0, scl = Pin(13), sda = Pin(12)))
+
+count = 0
+count1 = 0
+count2 = 0
+
+motion = 0
+publish = ''
+
+def WIFI_Connect():
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+    start_time = time.time()
+
+    if not wlan.isconnected():
+        print('connecting to network...')
+        wlan.connect('13205', '10101010')
+        
+    if wlan.isconnected():
+        print('network information:', wlan.ifconfig())
+        return True
+    
+def MQTT_Send(tim):
+    client.publish(TOPIC, publish)
+
+while (True):
+    msg = 'Accelerometer: x:{:>8.3f} y:{:>8.3f} z:{:>8.3f}'.format(*lsm.read_accel())
+    xyz = (msg.split())
+    x = float(xyz[2])
+    y = float(xyz[4])
+    z = float(xyz[6])
+    SVM = x + y + z
+    
+    if SVM> 5:
+        count1 = 1
+        
+    elif SVM<3:
+        count2 = 1
+        
+    if count1 == 1 and count2 == 1:
+        count1 = 0
+        count2 = 0
+        motion += 1
+    
+    count += 1
+    
+    if count == 180:
+        avr_motion = motion/10
+        motion = 0
+        count = 0
+        if avr_motion > 5: #3
+            publish='running'
+            print(publish)
+        elif avr_motion>3: #0.92
+            publish = 'walking'
+            print(publish)
+        elif avr_motion < 3: #0.92
+            publish = 'standing'
+            print(publish)
+        break    
+    time.sleep_ms(100)
+
+if WIFI_Connect():
+    SERVER = '192.168.0.91'
+    PORT = 1883
+    CLIENT_ID = ''
+    TOPIC = 'accel'
+    client = MQTTClient(CLIENT_ID, SERVER, PORT,keepalive = 30)
+    client.connect()
+
+    tim = Timer(-1)
+    tim.init(period = 1000, mode = Timer.PERIODIC,callback = MQTT_Send)
